@@ -28,6 +28,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.each {
+                output ->
+                    def variantName = variant.buildType.name == "debug" ? "Staging" : "Production"
+                    def name = "AntiTheft " + variantName + "(" + new Date().format('yy-MM-dd') + ").apk"
+                    output.outputFileName = name
+            }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
